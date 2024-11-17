@@ -1,0 +1,90 @@
+<!DOCTYPE html>  
+<html lang="zh">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Simple Timer</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            min-height: 100vh;  
+            margin: 0;  
+            background-color: #f0f0f0;  
+        }  
+        .container {  
+            text-align: center;  
+            padding: 2rem;  
+            background-color: white;  
+            border-radius: 10px;  
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);  
+        }  
+        .timer {  
+            font-size: 4rem;  
+            margin: 1rem 0;  
+        }  
+        button {  
+            font-size: 1.2rem;  
+            padding: 0.5rem 1rem;  
+            margin: 0.5rem;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            background-color: #4CAF50;  
+            color: white;  
+        }  
+        button:hover {  
+            background-color: #45a049;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h1>Simple Timer</h1>  
+        <div class="timer" id="timer">00:00:00</div>  
+        <div>  
+            <button onclick="startTimer()">开始</button>  
+            <button onclick="pauseTimer()">暂停</button>  
+            <button onclick="resetTimer()">重置</button>  
+        </div>  
+    </div>  
+
+    <script>  
+        let time = 0;  
+        let timerInterval;  
+        let isRunning = false;  
+
+        function updateDisplay() {  
+            const hours = Math.floor(time / 3600);  
+            const minutes = Math.floor((time % 3600) / 60);  
+            const seconds = time % 60;  
+            
+            document.getElementById('timer').textContent =   
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;  
+        }  
+
+        function startTimer() {  
+            if (!isRunning) {  
+                isRunning = true;  
+                timerInterval = setInterval(() => {  
+                    time++;  
+                    updateDisplay();  
+                }, 1000);  
+            }  
+        }  
+
+        function pauseTimer() {  
+            isRunning = false;  
+            clearInterval(timerInterval);  
+        }  
+
+        function resetTimer() {  
+            pauseTimer();  
+            time = 0;  
+            updateDisplay();  
+        }  
+    </script>  
+</body>  
+</html>
